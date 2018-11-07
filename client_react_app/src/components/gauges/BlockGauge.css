@@ -1,0 +1,16 @@
+.BlockGauge  {
+    
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    color: gray;
+    padding:10px;
+    border: 1px solid gray;
+    margin: 0px 10px;
+    background-image: url('https://hookagency.com/wp-content/uploads/2015/11/hazemaster-gray-gradient-ui-background.jpg');
+    height: 150px;
+}
+.BlockGauge h1 {
+    color: grey;
+    font-weight: bold;
+      
+}

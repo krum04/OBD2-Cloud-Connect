@@ -1,0 +1,11 @@
+.dGauge {
+   padding:10px;
+   border: 1px solid gray;
+   margin: 0px 10px;
+   background-image: url('https://hookagency.com/wp-content/uploads/2015/11/hazemaster-gray-gradient-ui-background.jpg');
+   font-size: 20px;
+}
+
+text {
+    font-size: 30px;
+}
