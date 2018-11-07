@@ -1,5 +1,6 @@
 import * as firebase from 'firebase';
 
+//Enter API info bellow
 var config = {
     apiKey: "",
     authDomain: "",
