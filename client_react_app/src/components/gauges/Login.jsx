@@ -1,75 +1,169 @@
 import React, { Component } from 'react';
+//import './App.css';
 import firebase, { auth, provider } from './firebase.js';
 
-export default class Login extends Component {
-  
+class App extends Component {
   constructor() {
     super();
     this.state = {
       currentItem: '',
       username: '',
+      carYear: '',
+      carMake: '',
+      carModel: '',
+      city: '',
+      state: '',
       items: [],
-      user: null // <-- add this line
+      id: '',
+      user: null,
+      
+
     }
-    this.login = this.login.bind(this); // <-- add this line
-    this.logout = this.logout.bind(this); // <-- add this line
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.login = this.login.bind(this);
+    this.logout = this.logout.bind(this);
   }
 
+  handleChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  }
+
+  login() {
+    auth.signInWithPopup(provider) 
+      .then((result) => {
+        const user = result.user;
+        const uId = user.uid;
+        console.log(user.uid);
+        
+        this.setState({
+          user
+        });
+      });
+  }
+  
+  logout() {
+    auth.signOut()
+      .then(() => {
+        this.setState({
+          user: null
+        });
+      });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    const itemsRef = firebase.database().ref('items');
+    const key = this.state.user.uid
+    const item = {
+      title: this.state.currentItem,
+      user: this.state.user.uid,
+      carYear: this.state.carYear,
+      carMake: this.state.carMake,
+      carModel: this.state.carModel,
+      }
+    
+    itemsRef.set(item);
+    this.setState({
+      "id": {
+      currentItem: '',
+      username: '',
+      carYear: '',
+      carMake: '',
+      carModel: '',
+      },
+    });
+  }
+  
   componentDidMount() {
     auth.onAuthStateChanged((user) => {
       if (user) {
         this.setState({ user });
       } 
     });
-  }
-
-  handleChange(e) {
-    /* ... */
-  }
-  logout() {
-    auth.signOut()
-    .then(() => {
+    const itemsRef = firebase.database().ref('users');
+    itemsRef.on('value', (snapshot) => {
+      let items = snapshot.val();
+      let newState = [];
+      for (let item in items) {
+        newState.push({
+          id: item,
+          title: items[item].title,
+          user: items[item].user,
+          carYear: items[item].carYear,
+          carMake: items[item].carYear,
+          carModel: items[item].carYear,
+           
+        });
+      }
       this.setState({
-        user: null
+        
+        users: newState
       });
     });
   }
-  login() {
-    auth.signInWithPopup(provider) 
-      .then((result) => {
-        const user = result.user;
-        this.setState({
-          user
-        });
-      });
+  removeItem(itemId) {
+    const itemRef = firebase.database().ref(`/users/${itemId}`);
+    itemRef.remove();
   }
-      
-  render () {
-    return(
+  render() {
+    return (
       <div className='app'>
-      <header>
-        <div className="wrapper">
-          <h1>OBD Cloud Connect</h1>
-          {this.state.user ?
-            <button onClick={this.logout}>Logout</button>                
-            :
-            <button onClick={this.login}>Log In</button>              
-          }
-        </div>
-      </header>
-      {this.state.user ?
-        <div>
-          <div className='user-profile'>
-            <img src={this.state.user.photoURL} />
-            <h1>{this.state.user.displayName}</h1>
+        <header>
+            <div className="wrapper">
+              <h1>Fun Food Friends</h1>
+              {this.state.user ?
+                <button onClick={this.logout}>Logout</button>                
+              :
+                <button onClick={this.login}>Log In</button>              
+              }
+            </div>
+        </header>
+        {this.state.user ?
+          <div>
+            <div className='user-profile'>
+                <img src={this.state.user.photoURL} />
+            </div>
+            <div className='container'>
+              <section className='add-item'>
+                    <form onSubmit={this.handleSubmit}>
+                      <input type="text" name="username" placeholder={this.state.user.uid} onChange={this.handleChange} value={this.state.user.id} />
+                      <input type="text" name="currentItem" placeholder="DevID?" onChange={this.handleChange} value={this.state.currentItem} />
+                      <input type="text" name="carYear" placeholder="Year" onChange={this.handleChange} value={this.state.carYear} />
+                      <input type="text" name="carModel" placeholder="Model" onChange={this.handleChange} value={this.state.carModel} />
+                      <input type="text" name="carMake" placeholder="Make" onChange={this.handleChange} value={this.state.carMake} />
+                      <button>Submit</button>
+                    </form>
+              </section>
+
+              <section className='display-item'>
+                  <div className="wrapper">
+                    <ul>
+                      {this.state.items.map((item) => {
+                        return (
+                          <li key={item.id}>
+                            <h3>{item.title}</h3>
+                            <p>brought by: {item.user}
+                              {item.user === this.state.user.displayName || item.user === this.state.user.email ?
+                                <button onClick={() => this.removeItem(item.id)}>Remove Item</button>
+                              : null}
+                            </p>
+                          </li>
+                        )
+                      })}
+                    </ul>
+                  </div>
+              </section>
+            </div>
           </div>
-        </div>
-        :
-        <div className='wrapper'>
-          <p>Please Login</p>
-        </div>
-      }
-    </div>
-    )  
+        : 
+          <p>You must be logged in to see the potluck list and submit to it.</p>
+        }
+        
+      </div>
+    );
   }
 }
+export default App;
