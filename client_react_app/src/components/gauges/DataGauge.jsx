@@ -15,7 +15,7 @@ export default class DataGauge extends Component{
     this.database = this.firebaseDatabase.ref(devId).child('data').child(keyVal);
     
     
-    
+      
     this.state = {
       gaugeVal: 0,
       };
