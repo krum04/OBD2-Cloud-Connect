@@ -1,23 +1,19 @@
 import React, { Component } from 'react';
-import './App.css';
+//import './App.css';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
-import Home from './components/Home';
-import Demo from './components/Demo';
-import Updates from './components/Updates';
-import Login from './components/gauges/Login';
-import Navbar from './components/CustomNavbar';
-
-
-
+import Home from './app/components/Home';
+import Demo from './app/components/Demo';
+import Updates from './app/components/Updates';
+import Login from './app/components/Login';
+import Navbar from './app/components/CustomNavbar';
 
 class App extends Component {
-
-constructor(){
-  super();
-  this.state = {
-    authenticated: false,
+  constructor(){
+    super();
+    this.state = {
+      authenticated: false,
+    }
   }
-}
 
   render() {
     return (
@@ -27,7 +23,7 @@ constructor(){
               <Route exact path = "/" component={Home} />
               <Route path = "/demo" component={Demo} />
               <Route path = "/Updates" component={Updates} />
-              <Route path = "/gauges/Login" component={Login} />
+              <Route path = "/Login" component={Login} />
               </div>
       </Router>
     );
