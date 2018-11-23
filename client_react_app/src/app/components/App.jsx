@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-//import './App.css';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
-import Home from './app/components/Home';
-import Demo from './app/components/Demo';
-import Updates from './app/components/Updates';
-import Login from './app/components/Login';
-import Navbar from './app/components/CustomNavbar';
+import Home from './Home';
+import Demo from './Demo';
+import Updates from './Updates';
+import Login from './Login';
+import Navbar from './CustomNavbar';
 
 class App extends Component {
   constructor(){
