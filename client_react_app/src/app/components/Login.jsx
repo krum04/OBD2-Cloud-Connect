@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-//import '../styles/App.css';
-import firebase, { auth, provider } from "./firebase.js";
+import firebase, { auth, provider } from "../containers/firebase.js";
+import PropTypes from 'prop-types';
+import {setUserID} from "../actions";
+
 
 class login extends Component {
   constructor(props) {
     super(props);
-    var loginUserID = this.props.uid;
     this.state = {
       currentItem: "",
       username: "",
@@ -18,7 +19,6 @@ class login extends Component {
       id: "",
       user: null
     };
-
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.login = this.login.bind(this);
@@ -34,12 +34,8 @@ class login extends Component {
   login() {
     auth.signInWithPopup(provider).then(result => {
       const user = result.user;
-      const uId = user.uid;
       console.log(user.uid);
-
-      this.setState({
-        user
-      });
+      this.props.setUserID(user);
     });
   }
 
@@ -58,7 +54,6 @@ class login extends Component {
       .ref("users")
       .child(this.state.user.uid);
 
-    //const key = this.state.user.uid;
     const item = {
       title: this.state.currentItem,
       user: this.state.user.uid,
@@ -66,7 +61,7 @@ class login extends Component {
       carMake: this.state.carMake,
       carModel: this.state.carModel
     };
-    // this.props.changeDevId(this.state.user)
+   
     itemsRef.set(item);
     this.setState({
       id: {
@@ -82,9 +77,10 @@ class login extends Component {
   componentDidMount() {
     auth.onAuthStateChanged(user => {
       if (user) {
-        this.setState({ user });
+        this.props.setUserID(user)
       }
     });
+    
     const itemsRef = firebase.database().ref("users");
     itemsRef.on("value", snapshot => {
       let items = snapshot.val();
@@ -106,9 +102,7 @@ class login extends Component {
   }
 
   render() {
-    
     return (
-    
       <div className="login">
         <header>
           <meta>{this.state.user}</meta>
@@ -117,8 +111,8 @@ class login extends Component {
             {this.state.user ? (
               <button onClick={this.logout}>Logout</button>
             ) : (
-              <button onClick={this.login}>Log In</button>
-            )}
+                  <button onClick={this.login}>Log In</button>
+                )}
           </div>
         </header>
         {this.state.user ? (

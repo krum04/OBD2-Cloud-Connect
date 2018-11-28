@@ -4,7 +4,7 @@ import { Jumbotron, Grid, Row, Col, Image, Button } from 'react-bootstrap';
 import '../styles/Demo.css';
 import Gage from './DataGauge';
 import Trend from './LineGraph';
-import Rawvals from './Raw';
+import Rawvals from '../containers/Raw';
 import Block from './BlockGauge';
 import LineOverlay from './LineGraphOverlay';
 import login from './Login';

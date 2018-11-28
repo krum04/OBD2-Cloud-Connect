@@ -1,14 +1,15 @@
 const userReducer = (state = {
     userId: ""
-}, action) => {
+    }, action) => {
     switch (action.type){
-        case "UPDATE":
-            state = {
+        case "SET_USER_ID":
+           return state = {
                 ...state,
                 userID: action.payload
-            };      
+            }
+            default:
+               return state;     
     }
-    return state;
 }
 
 export default userReducer;

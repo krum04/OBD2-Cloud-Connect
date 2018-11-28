@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { firebaseDatabase } from "./firebase";
+import { firebaseDatabase } from "../containers/firebase";
 import Trend from 'react-trend';
 import '../styles/LineGraph.css';
 

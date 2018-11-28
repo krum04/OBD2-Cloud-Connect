@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
-import Home from './Home';
-import Demo from './Demo';
-import Updates from './Updates';
-import Login from './Login';
-import Navbar from './CustomNavbar';
+import { connect } from "react-redux";
+import Home from '../components/Home';
+import Demo from '../components/Demo';
+import Updates from '../components/Updates';
+import Login from '../components/Login';
+import Navbar from '../components/CustomNavbar';
+import { setUserID } from "../actions";
 
 class App extends Component {
   constructor(){
@@ -13,6 +15,8 @@ class App extends Component {
       authenticated: false,
     }
   }
+
+
 
   render() {
     return (
@@ -23,10 +27,24 @@ class App extends Component {
               <Route path = "/demo" component={Demo} />
               <Route path = "/Updates" component={Updates} />
               <Route path = "/Login" component={Login} />
-              </div>
+          </div>
       </Router>
     );
   }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+      login : state.login
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setUserID: (userID) => {
+      dispatch(setUserID(userID));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps) (App);
