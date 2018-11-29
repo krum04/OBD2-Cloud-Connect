@@ -19,7 +19,9 @@ class App extends Component {
 
 
   render() {
+   
     return (
+    
       <Router>
           <div>
               <Navbar authenticated={this.state.authenticated}/>

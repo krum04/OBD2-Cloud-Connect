@@ -1,3 +1,4 @@
+import {combineReducers } from 'redux';
 const userReducer = (state = {
     userId: ""
     }, action) => {
@@ -12,4 +13,4 @@ const userReducer = (state = {
     }
 }
 
-export default userReducer;
+export default combineReducers({userReducer});

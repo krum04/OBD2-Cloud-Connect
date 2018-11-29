@@ -35,7 +35,7 @@ class login extends Component {
     auth.signInWithPopup(provider).then(result => {
       const user = result.user;
       console.log(user.uid);
-      this.props.setUserID(user);
+      dispatchEvent(setUserID("test"))
     });
   }
 
@@ -77,7 +77,8 @@ class login extends Component {
   componentDidMount() {
     auth.onAuthStateChanged(user => {
       if (user) {
-        this.props.setUserID(user)
+       // this.props.setUserID(user)
+       dispatchEvent(setUserID(user))
       }
     });
     
@@ -211,4 +212,5 @@ class login extends Component {
     );
   }
 }
+
 export default login;
