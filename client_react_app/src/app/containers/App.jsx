@@ -8,6 +8,21 @@ import Login from '../components/Login';
 import Navbar from '../components/CustomNavbar';
 import { setUserID } from "../actions";
 
+
+const MyContext = React.createContext();
+class MyProvider extends Component {
+  state  ={
+    userID: 12345
+  }
+  render(){
+    return(
+      <MyContext.Provider value = "USER ID COMING SOON">
+        {this.props.children}
+      </MyContext.Provider>
+
+    )
+  }
+}
 class App extends Component {
   constructor(){
     super();
@@ -35,18 +50,6 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-      login : state.login
-  };
-};
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setUserID: (userID) => {
-      dispatch(setUserID(userID));
-    }
-  };
-};
 
-export default connect(mapStateToProps, mapDispatchToProps) (App);
+export default App;

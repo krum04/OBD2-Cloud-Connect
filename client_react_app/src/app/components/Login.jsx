@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import firebase, { auth, provider } from "../containers/firebase.js";
-import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import {setUserID} from "../actions";
+import PropTypes from "prop-types";
+import MyContext from '../../index'
+
 
 
 class login extends Component {
@@ -35,7 +38,8 @@ class login extends Component {
     auth.signInWithPopup(provider).then(result => {
       const user = result.user;
       console.log(user.uid);
-      dispatchEvent(setUserID("test"))
+      this.setState({user});  
+       
     });
   }
 
@@ -75,13 +79,12 @@ class login extends Component {
   }
 
   componentDidMount() {
+    let value = this.userContext;
     auth.onAuthStateChanged(user => {
       if (user) {
-       // this.props.setUserID(user)
-       dispatchEvent(setUserID(user))
+       this.setState({user});
       }
     });
-    
     const itemsRef = firebase.database().ref("users");
     itemsRef.on("value", snapshot => {
       let items = snapshot.val();
@@ -103,12 +106,18 @@ class login extends Component {
   }
 
   render() {
+    let test = this.userContext;
     return (
       <div className="login">
         <header>
-          <meta>{this.state.user}</meta>
+          <MyContext.Consumer>
+            {(context) =>
+              <p> im inside the context {context}</p>
+            }
+          </MyContext.Consumer>
           <div className="wrapper">
-            <h1>Fun Food Friends</h1>
+            <h1>Car</h1>
+            <h1>hello </h1>
             {this.state.user ? (
               <button onClick={this.logout}>Logout</button>
             ) : (
@@ -127,6 +136,7 @@ class login extends Component {
                   <ul class="list-unstyled">
                     <li hidden>
                       <h1>{this.state.user.id}</h1>
+                      dispatch(addToDo(input.value))
                       <input
                         type="text"
                         name="username"
@@ -206,7 +216,7 @@ class login extends Component {
             </div>
           </div>
         ) : (
-          <p>You must be logged in to see the potluck list and submit to it.</p>
+          <p>Car informations</p>
         )}
       </div>
     );
