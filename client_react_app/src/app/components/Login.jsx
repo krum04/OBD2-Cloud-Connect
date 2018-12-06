@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import firebase, { auth, provider } from "../containers/firebase.js";
-import {connect} from 'react-redux';
-import {setUserID} from "../actions";
-import PropTypes from "prop-types";
+import MyProvider  from '../../index';
 import MyContext from '../../index'
 
 
@@ -79,7 +77,6 @@ class login extends Component {
   }
 
   componentDidMount() {
-    let value = this.userContext;
     auth.onAuthStateChanged(user => {
       if (user) {
        this.setState({user});

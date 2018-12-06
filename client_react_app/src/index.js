@@ -19,6 +19,7 @@ export default class MyProvider extends Component {
     )
   }
 }
+
 ReactDOM.render(  
     <MyProvider>
         <App />
