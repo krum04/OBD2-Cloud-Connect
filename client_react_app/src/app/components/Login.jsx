@@ -1,14 +1,10 @@
 import React, { Component } from "react";
 import firebase, { auth, provider } from "../containers/firebase.js";
-import MyProvider  from '../../index';
-import MyContext from '../../index'
 
-
-
-class login extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = {
+    this.state = {                      
       currentItem: "",
       username: "",
       carYear: "",
@@ -103,15 +99,9 @@ class login extends Component {
   }
 
   render() {
-    let test = this.userContext;
     return (
       <div className="login">
         <header>
-          <MyContext.Consumer>
-            {(context) =>
-              <p> im inside the context {context}</p>
-            }
-          </MyContext.Consumer>
           <div className="wrapper">
             <h1>Car</h1>
             <h1>hello </h1>
@@ -125,12 +115,12 @@ class login extends Component {
         {this.state.user ? (
           <div>
             <div className="user-profile">
-              <img src={this.state.user.photoURL} />
+              <img src={this.state.user.photoURL}  alt="login" />
             </div>
             <div className="container">
               <section className="add-item">
                 <form onSubmit={this.handleSubmit}>
-                  <ul class="list-unstyled">
+                  <ul className="list-unstyled">
                     <li hidden>
                       <h1>{this.state.user.id}</h1>
                       dispatch(addToDo(input.value))
@@ -220,4 +210,4 @@ class login extends Component {
   }
 }
 
-export default login;
+export default Login;

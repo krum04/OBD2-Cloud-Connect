@@ -5,9 +5,7 @@ import '../styles/CustomNavbar.css';
 
 export default class CustomNavbar extends Component {
     render(){
-        console.log("I am called yo")
-        return(
-            
+        return(            
             <Navbar default collapseOnSelect>
                 <Navbar.Header>
                     <Navbar.Brand>

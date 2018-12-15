@@ -14,13 +14,8 @@ class App extends Component {
       authenticated: false,
     }
   }
-
-
-
   render() {
-   
     return (
-    
       <Router>
           <div>
               <Navbar authenticated={this.state.authenticated}/>
@@ -33,7 +28,5 @@ class App extends Component {
     );
   }
 }
-
-
 
 export default App;
