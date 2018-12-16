@@ -10,7 +10,6 @@ export default class LineGraph extends Component{
         var devId = this.props.devId
         this.firebaseDatabase = firebaseDatabase;
         this.database1 = this.firebaseDatabase.ref(devId).child('data').child(keyVal);
-
         this.state= {
             dValue:0,
             q: Array.apply(null, Array(100)).map(Number.prototype.valueOf,50)
@@ -33,24 +32,23 @@ export default class LineGraph extends Component{
             this.state.q.shift();
     }
 };    
-
 render(){
     this.lineGraphData();
     return(
         <div id='lineGauge'>
-        <h1>{this.props.nameVal}</h1> 
-        <Trend width={300} height={200}
-            smooth
-            autoDraw
-            autoDrawDuration={5}
-            autoDrawEasing="ease-out"
-            data={this.state.q}
-            gradient={['white']}
-            radius={25}
-            strokeWidth={4}
-            strokeLinecap={'butt'}
-            />       
-    </div>
-)
+            <h1>{this.props.nameVal}</h1> 
+            <Trend width={300} height={200}
+                smooth
+                autoDraw
+                autoDrawDuration={5}
+                autoDrawEasing="ease-out"
+                data={this.state.q}
+                gradient={['white']}
+                radius={25}
+                strokeWidth={4}
+                strokeLinecap={'butt'}
+                />       
+        </div>
+    )
 }
 }

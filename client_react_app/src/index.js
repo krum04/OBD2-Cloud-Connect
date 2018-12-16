@@ -3,21 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import { Component } from "react";
 import App from './app/containers/App';
+import {UserProvider, UserContext} from "./app/contexts/UserContext";
 
-const MyContext = React.createContext();
-export default class MyProvider extends Component {
-  state={ userID: 12345 }
-  render(){
-    return(
-      <MyContext.Provider value = "USER ID COMING SOON">
-        {this.props.children}
-      </MyContext.Provider>
-    )
-  }
-}
-ReactDOM.render(  
-    <MyProvider>
-      <App />
-    </MyProvider>,
+ReactDOM.render (  
+    <UserProvider>
+      <UserContext.Consumer>
+        {({user}) => <App user={user} /> }
+      </UserContext.Consumer>
+    </UserProvider>,
     document.getElementById('root')    
 );

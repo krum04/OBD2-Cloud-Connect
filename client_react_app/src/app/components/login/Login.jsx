@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import firebase, { auth, provider } from "../containers/firebase.js";
+import firebase, { auth, provider } from "../../containers/firebase.js";
+
+import {UserContext} from "../../contexts/UserContext";;
 
 class Login extends Component {
   constructor(props) {
@@ -21,22 +23,17 @@ class Login extends Component {
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
   }
-
   handleChange(e) {
     this.setState({
       [e.target.name]: e.target.value
     });
   }
-
   login() {
     auth.signInWithPopup(provider).then(result => {
       const user = result.user;
-      console.log(user.uid);
-      this.setState({user});  
-       
+      this.setState({user});   
     });
   }
-
   logout() {
     auth.signOut().then(() => {
       this.setState({
@@ -44,14 +41,12 @@ class Login extends Component {
       });
     });
   }
-
   handleSubmit(e) {
     e.preventDefault();
     const itemsRef = firebase
       .database()
       .ref("users")
       .child(this.state.user.uid);
-
     const item = {
       title: this.state.currentItem,
       user: this.state.user.uid,
@@ -99,12 +94,16 @@ class Login extends Component {
   }
 
   render() {
+    console.log(this.props.user)
     return (
       <div className="login">
         <header>
           <div className="wrapper">
+            <h1> {this.props.user} </h1>
             <h1>Car</h1>
             <h1>hello </h1>
+        
+          
             {this.state.user ? (
               <button onClick={this.logout}>Logout</button>
             ) : (
@@ -177,7 +176,6 @@ class Login extends Component {
                   </ul>
                 </form>
               </section>
-
               <section className="display-item">
                 <div className="wrapper">
                   <ul>
@@ -203,7 +201,7 @@ class Login extends Component {
             </div>
           </div>
         ) : (
-          <p>Car informations</p>
+          <p>Car information</p>
         )}
       </div>
     );

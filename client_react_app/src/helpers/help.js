@@ -1,4 +1,4 @@
-import { ref, firebaseAuth, firebaseDatabase } from '../gauges/firebase'
+import { firebaseAuth, firebaseDatabase } from '../gauges/firebase'
 
 export function auth (email, pw) {
   return firebaseAuth().createUserWithEmailAndPassword(email, pw)
