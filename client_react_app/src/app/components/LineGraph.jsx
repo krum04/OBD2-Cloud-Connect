@@ -18,7 +18,7 @@ export default class LineGraph extends Component{
     componentDidMount() {
         this.database1.on("value", snap => {
             this.setState({
-            dValue: snap.val()
+                dValue: snap.val()
             });
         });
     }
