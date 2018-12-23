@@ -1,3 +1,2 @@
-# OBD2-Cloud-Connect
-
-Connect Automotive On-board Diagnostic Port Data to Firebase with Client App
+# OBD2-Cloud-Connec-Client
+Demo react application that fetches live OBDII readings from Firebase and displays them localy in the browser.
